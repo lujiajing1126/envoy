@@ -31,8 +31,6 @@
 namespace Envoy {
 namespace Upstream {
 
-class ClusterManagerImpl;
-
 /**
  * Production implementation of ClusterManagerFactory.
  */
@@ -105,7 +103,7 @@ public:
    * @param per_cluster_init_callback supplies the callback to call when a cluster has itself
    *        initialized. The cluster manager can use this for post-init processing.
    */
-  ClusterManagerInitHelper(ClusterManagerImpl& cm,
+  ClusterManagerInitHelper(ClusterManager& cm,
                            const std::function<void(Cluster&)>& per_cluster_init_callback)
       : cm_(cm), per_cluster_init_callback_(per_cluster_init_callback) {}
 
@@ -141,7 +139,7 @@ private:
   void maybeFinishInitialize();
   void onClusterInit(Cluster& cluster);
 
-  ClusterManagerImpl& cm_;
+  ClusterManager& cm_;
   std::function<void(Cluster& cluster)> per_cluster_init_callback_;
   CdsApi* cds_{};
   std::function<void()> initialized_callback_;
